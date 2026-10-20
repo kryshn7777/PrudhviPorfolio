@@ -62,9 +62,9 @@ function Part({ i, p }) {
 }
 
 const GATE_STYLE = [
-  { label: 'Class-A surface', sheet: '#19B5E6', opacity: 0.22 },
-  { label: 'Zebra check', sheet: '#ffffff', opacity: 0.18 },
-  { label: 'Paint', sheet: '#F2C230', opacity: 0.16 },
+  { label: 'Class-A surface', sheet: '#19B5E6', opacity: 0.45 },
+  { label: 'Zebra check', sheet: '#ffffff', opacity: 0.4 },
+  { label: 'Paint', sheet: '#F2C230', opacity: 0.4 },
 ];
 
 function Gates() {
@@ -140,8 +140,12 @@ export function Environment({ background }) {
 function CameraRig() {
   const [pos, look, a, b] = useMemo(() => [1, 2, 3, 4].map(() => new THREE.Vector3()), []);
   useFrame(({ camera, size }, dt) => {
-    // Smooth the scroll so a mouse-wheel tick glides instead of jumping
-    scroll.v = reduceMotion ? scroll.s : THREE.MathUtils.damp(scroll.v, scroll.s, 5, dt);
+    // Two cascaded dampers: belt eases in, then coasts and settles after scrolling stops
+    if (reduceMotion) scroll.m = scroll.v = scroll.s;
+    else {
+      scroll.m = THREE.MathUtils.damp(scroll.m, scroll.s, 0.8, dt);
+      scroll.v = THREE.MathUtils.damp(scroll.v, scroll.m, 1.25, dt);
+    }
     const s = scroll.v;
     // Along the line: watch all three gates, with a slow sway. Finale: pull back over the finished parts.
     const f = ease(clamp01(s - LINE.length));
