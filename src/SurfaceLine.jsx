@@ -143,8 +143,8 @@ function CameraRig() {
     // Two cascaded dampers: belt eases in, then coasts and settles after scrolling stops
     if (reduceMotion) scroll.m = scroll.v = scroll.s;
     else {
-      scroll.m = THREE.MathUtils.damp(scroll.m, scroll.s, 0.8, dt);
-      scroll.v = THREE.MathUtils.damp(scroll.v, scroll.m, 1.25, dt);
+      scroll.m = THREE.MathUtils.damp(scroll.m, scroll.s, 4, dt);
+      scroll.v = THREE.MathUtils.damp(scroll.v, scroll.m, 6, dt);
     }
     const s = scroll.v;
     // Along the line: watch all three gates, with a slow sway. Finale: pull back over the finished parts.
