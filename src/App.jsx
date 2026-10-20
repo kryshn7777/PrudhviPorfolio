@@ -4,7 +4,7 @@ import { useProgress } from '@react-three/drei';
 import SurfaceLine from './SurfaceLine.jsx';
 import Viewer from './Viewer.jsx';
 import { PARTS, LINE, MORE_PROJECTS } from './parts.js';
-import { scroll, initHeavyScroll } from './scroll.js';
+import { scroll } from './scroll.js';
 
 const EMAIL = 'prudhvimunaganti@gmail.com';
 const LINKEDIN = 'https://www.linkedin.com/in/prudhvimunaganti';
@@ -79,8 +79,7 @@ export default function App() {
     onScroll();
     addEventListener('scroll', onScroll, { passive: true });
     addEventListener('resize', onScroll);
-    const stopHeavy = initHeavyScroll();
-    return () => { removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); stopHeavy(); };
+    return () => { removeEventListener('scroll', onScroll); removeEventListener('resize', onScroll); };
   }, []);
 
   return (
