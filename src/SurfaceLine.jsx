@@ -141,7 +141,7 @@ function CameraRig() {
   const [pos, look, a, b] = useMemo(() => [1, 2, 3, 4].map(() => new THREE.Vector3()), []);
   useFrame(({ camera, size }, dt) => {
     // Smooth the scroll so a mouse-wheel tick glides instead of jumping
-    scroll.v = reduceMotion ? scroll.s : THREE.MathUtils.damp(scroll.v, scroll.s, 5, dt);
+    scroll.v = reduceMotion ? scroll.s : THREE.MathUtils.damp(scroll.v, scroll.s, 2.5, dt);
     const s = scroll.v;
     // Along the line: watch all three gates, with a slow sway. Finale: pull back over the finished parts.
     const f = ease(clamp01(s - LINE.length));
